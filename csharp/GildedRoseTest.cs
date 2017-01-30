@@ -41,6 +41,45 @@ namespace GildedRose
 
       Assert.AreEqual(initialSellIn, item.SellIn);
     }
+
+    [Test]
+    public void Quality_Decreases()
+    {
+      const int initialQuality = 14;
+      var item = new ItemBuilder().WithQuality(initialQuality).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality - 1, item.Quality);
+    }
+
+    [Test]
+    public void Quality_AfterSellByDate_DecreasesAtDoubleSpeed()
+    {
+      const int initialQuality = 14;
+      var item = new ItemBuilder().WithQuality(initialQuality).WithSellIn(-1).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality - 2, item.Quality);
+    }
+
+    [Test]
+    public void Quality_OnSellByDate_DecreasesAtDoubleSpeed()
+    {
+      const int initialQuality = 15;
+      var item = new ItemBuilder().WithQuality(initialQuality).WithSellIn(0).Build();
+
+      GildedRose app = new GildedRose(new[] { item });
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality - 2, item.Quality);
+    }
+
+
   }
 }
 
