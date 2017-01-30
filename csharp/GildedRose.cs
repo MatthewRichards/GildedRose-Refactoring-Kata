@@ -42,12 +42,7 @@ namespace GildedRose
 		    item.Quality = EnforceQualityRange(qualityRule(item.SellIn, item.Quality));
         
         
-		    if (item.Name != SulfurasHandOfRagnaros)
-		    {
-		      item.SellIn = item.SellIn - 1;
-		    }
-				
-		    if (item.SellIn < 0)
+		    if (item.SellIn <= 0)
 		    {
 		      if (item.Name != AgedBrie)
 		      {
@@ -75,17 +70,22 @@ namespace GildedRose
 		      }
 		    }
 
-		    if (item.Name == ConjouredRabbit)
+        if (item.Name == ConjouredRabbit)
 		    {
-		      if (item.SellIn < 0)
+		      if (item.SellIn <= 0)
 		      {
 		        item.Quality--;
 		      }
 
 		      item.Quality--;
 		    }
-		  }
-		}
+
+        if (item.Name != SulfurasHandOfRagnaros)
+        {
+          item.SellIn = item.SellIn - 1;
+        }
+      }
+    }
 
 	  private int EnforceQualityRange(int quality)
 	  {
