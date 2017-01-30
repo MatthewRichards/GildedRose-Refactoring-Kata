@@ -34,7 +34,7 @@ namespace GildedRose
     public void SellIn_StaysConstantForSulfuras()
     {
       const int initialSellIn = 17;
-      var item = new ItemBuilder().WithName("Sulfuras, Hand of Ragnaros").WithSellIn(initialSellIn).Build();
+      var item = new ItemBuilder().WithName(GildedRose.SulfurasHandOfRagnaros).WithSellIn(initialSellIn).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();
@@ -104,7 +104,7 @@ namespace GildedRose
     public void Quality_ForAgedBrie_IncreasesWithAge()
     {
       const int initialQuality = 19;
-      var item = new ItemBuilder().WithName("Aged Brie").WithQuality(initialQuality).Build();
+      var item = new ItemBuilder().WithName(GildedRose.AgedBrie).WithQuality(initialQuality).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();
@@ -113,8 +113,8 @@ namespace GildedRose
     }
 
     [Test]
-    [TestCase("Aged Brie")]
-    [TestCase("Backstage passes to a TAFKAL80ETC concert")]
+    [TestCase(GildedRose.AgedBrie)]
+    [TestCase(GildedRose.BackstagePasses)]
     public void Quality_DoesntIncreaseAbove50(string interestingProductName)
     {
       const int maxQuality = 50;
@@ -132,7 +132,7 @@ namespace GildedRose
     public void Quality_StaysConstantForSulfuras(int sellIn)
     {
       const int initialQuality = 41;
-      var item = new ItemBuilder().WithName("Sulfuras, Hand of Ragnaros").WithQuality(initialQuality).WithSellIn(sellIn).Build();
+      var item = new ItemBuilder().WithName(GildedRose.SulfurasHandOfRagnaros).WithQuality(initialQuality).WithSellIn(sellIn).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();
@@ -149,7 +149,7 @@ namespace GildedRose
     {
       const int initialQuality = 10;
       var item =
-        new ItemBuilder().WithName("Backstage passes to a TAFKAL80ETC concert")
+        new ItemBuilder().WithName(GildedRose.BackstagePasses)
           .WithSellIn(sellIn)
           .WithQuality(initialQuality)
           .Build();
@@ -163,7 +163,7 @@ namespace GildedRose
     [Test]
     public void Quality_ForBackstagePasses_DropsToZeroAfterSellByDate()
     {
-      var item = new ItemBuilder().WithName("Backstage passes to a TAFKAL80ETC concert").WithSellIn(0).Build();
+      var item = new ItemBuilder().WithName(GildedRose.BackstagePasses).WithSellIn(0).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();
@@ -175,7 +175,7 @@ namespace GildedRose
     public void Quality_ForConjouredItems_FallsAtDoubleSpeed()
     {
       var initialQuality = 19;
-      var item = new ItemBuilder().WithName("Conjoured rabbit").WithQuality(initialQuality).Build();
+      var item = new ItemBuilder().WithName(GildedRose.ConjouredRabbit).WithQuality(initialQuality).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="GildedRose.cs" />
     <Compile Include="GildedRoseTest.cs" />
+    <Compile Include="GoldMasterTest.cs" />
     <Compile Include="ItemBuilder.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
