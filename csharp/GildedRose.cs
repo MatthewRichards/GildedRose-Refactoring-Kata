@@ -9,97 +9,97 @@ namespace GildedRose
 	  public const string SulfurasHandOfRagnaros = "Sulfuras, Hand of Ragnaros";
 	  public const string ConjouredRabbit = "Conjoured rabbit";
 
-    IList<Item> Items;
+	  private readonly IList<Item> items;
 
-    public GildedRose(IList<Item> Items) 
+    public GildedRose(IList<Item> items) 
 		{
-			this.Items = Items;
+			this.items = items;
 		}
 		
 		public void UpdateQuality()
 		{
-			for (var i = 0; i < Items.Count; i++)
-			{
-				if (Items[i].Name != AgedBrie && Items[i].Name != BackstagePasses)
-				{
-					if (Items[i].Quality > 0)
-					{
-						if (Items[i].Name != SulfurasHandOfRagnaros)
-						{
-							Items[i].Quality = Items[i].Quality - 1;
-						}
-					}
-				}
-				else
-				{
-					if (Items[i].Quality < 50)
-					{
-						Items[i].Quality = Items[i].Quality + 1;
+		  foreach (Item item in items)
+		  {
+		    if (item.Name != AgedBrie && item.Name != BackstagePasses)
+		    {
+		      if (item.Quality > 0)
+		      {
+		        if (item.Name != SulfurasHandOfRagnaros)
+		        {
+		          item.Quality = item.Quality - 1;
+		        }
+		      }
+		    }
+		    else
+		    {
+		      if (item.Quality < 50)
+		      {
+		        item.Quality = item.Quality + 1;
 						
-						if (Items[i].Name == BackstagePasses)
-						{
-							if (Items[i].SellIn < 11)
-							{
-								if (Items[i].Quality < 50)
-								{
-									Items[i].Quality = Items[i].Quality + 1;
-								}
-							}
+		        if (item.Name == BackstagePasses)
+		        {
+		          if (item.SellIn < 11)
+		          {
+		            if (item.Quality < 50)
+		            {
+		              item.Quality = item.Quality + 1;
+		            }
+		          }
 							
-							if (Items[i].SellIn < 6)
-							{
-								if (Items[i].Quality < 50)
-								{
-									Items[i].Quality = Items[i].Quality + 1;
-								}
-							}
-						}
-					}
-				}
+		          if (item.SellIn < 6)
+		          {
+		            if (item.Quality < 50)
+		            {
+		              item.Quality = item.Quality + 1;
+		            }
+		          }
+		        }
+		      }
+		    }
 				
-				if (Items[i].Name != SulfurasHandOfRagnaros)
-				{
-					Items[i].SellIn = Items[i].SellIn - 1;
-				}
+		    if (item.Name != SulfurasHandOfRagnaros)
+		    {
+		      item.SellIn = item.SellIn - 1;
+		    }
 				
-				if (Items[i].SellIn < 0)
-				{
-					if (Items[i].Name != AgedBrie)
-					{
-						if (Items[i].Name != BackstagePasses)
-						{
-							if (Items[i].Quality > 0)
-							{
-								if (Items[i].Name != SulfurasHandOfRagnaros)
-								{
-									Items[i].Quality = Items[i].Quality - 1;
-								}
-							}
-						}
-						else
-						{
-							Items[i].Quality = Items[i].Quality - Items[i].Quality;
-						}
-					}
-					else
-					{
-						if (Items[i].Quality < 50)
-						{
-							Items[i].Quality = Items[i].Quality + 1;
-						}
-					}
-				}
+		    if (item.SellIn < 0)
+		    {
+		      if (item.Name != AgedBrie)
+		      {
+		        if (item.Name != BackstagePasses)
+		        {
+		          if (item.Quality > 0)
+		          {
+		            if (item.Name != SulfurasHandOfRagnaros)
+		            {
+		              item.Quality = item.Quality - 1;
+		            }
+		          }
+		        }
+		        else
+		        {
+		          item.Quality = item.Quality - item.Quality;
+		        }
+		      }
+		      else
+		      {
+		        if (item.Quality < 50)
+		        {
+		          item.Quality = item.Quality + 1;
+		        }
+		      }
+		    }
 
-			  if (Items[i].Name == ConjouredRabbit)
-			  {
-			    if (Items[i].SellIn < 0)
-			    {
-			      Items[i].Quality--;
-			    }
+		    if (item.Name == ConjouredRabbit)
+		    {
+		      if (item.SellIn < 0)
+		      {
+		        item.Quality--;
+		      }
 
-			    Items[i].Quality--;
-			  }
-			}
+		      item.Quality--;
+		    }
+		  }
 		}
 		
 	}
