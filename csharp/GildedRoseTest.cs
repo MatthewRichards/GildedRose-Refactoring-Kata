@@ -171,7 +171,17 @@ namespace GildedRose
       Assert.AreEqual(0, item.Quality);
     }
 
-    
+    [Test]
+    public void Quality_ForConjouredItems_FallsAtDoubleSpeed()
+    {
+      var initialQuality = 19;
+      var item = new ItemBuilder().WithName("Conjoured rabbit").WithQuality(initialQuality).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality - 2, item.Quality);
+    }
 
   }
 }
