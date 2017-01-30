@@ -71,7 +71,6 @@ namespace GildedRose
     {
       const int initialQuality = 15;
       var item = new ItemBuilder().WithQuality(initialQuality).WithSellIn(0).Build();
-
       GildedRose app = new GildedRose(new[] { item });
 
       app.UpdateQuality();
@@ -79,7 +78,27 @@ namespace GildedRose
       Assert.AreEqual(initialQuality - 2, item.Quality);
     }
 
+    [Test]
+    public void Quality_DoesNotGoNegative()
+    {
+      var item = new ItemBuilder().WithQuality(0).Build();
+      GildedRose app = new GildedRose(new[] { item });
 
+      app.UpdateQuality();
+
+      Assert.GreaterOrEqual(0, item.Quality);
+    }
+
+    [Test]
+    public void Quality_AfterSellByDate_DoesNotGoNegative()
+    {
+      var item = new ItemBuilder().WithQuality(0).WithSellIn(-1).Build();
+      GildedRose app = new GildedRose(new[] { item });
+
+      app.UpdateQuality();
+
+      Assert.GreaterOrEqual(0, item.Quality);
+    }
   }
 }
 
