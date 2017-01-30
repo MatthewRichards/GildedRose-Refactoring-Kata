@@ -89,6 +89,16 @@ namespace GildedRose
 						}
 					}
 				}
+
+			  if (Items[i].Name == ConjouredRabbit)
+			  {
+			    if (Items[i].SellIn < 0)
+			    {
+			      Items[i].Quality--;
+			    }
+
+			    Items[i].Quality--;
+			  }
 			}
 		}
 		

@@ -183,6 +183,19 @@ namespace GildedRose
       Assert.AreEqual(initialQuality - 2, item.Quality);
     }
 
+    [Test]
+    public void Quality_ForConjouredItems_FallsAtQuadrupleSpeedAfterSellByDate()
+    {
+      var initialQuality = 18;
+      var item =
+        new ItemBuilder().WithName(GildedRose.ConjouredRabbit).WithQuality(initialQuality).WithSellIn(0).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality - 4, item.Quality);
+    }
+
   }
 }
 
