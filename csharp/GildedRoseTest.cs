@@ -123,6 +123,21 @@ namespace GildedRose
 
       Assert.AreEqual(maxQuality, item.Quality);
     }
+
+    [Test]
+    [TestCase(-1)]
+    [TestCase(1)]
+    public void Quality_StaysConstantForSulfuras(int sellIn)
+    {
+      const int initialQuality = 41;
+      var item = new ItemBuilder().WithName("Sulfuras, Hand of Ragnaros").WithQuality(initialQuality).WithSellIn(sellIn).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality, item.Quality);
+    }
+
   }
 }
 
