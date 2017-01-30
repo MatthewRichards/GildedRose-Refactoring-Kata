@@ -113,10 +113,12 @@ namespace GildedRose
     }
 
     [Test]
-    public void Quality_DoesntIncreaseAbove50()
+    [TestCase("Aged Brie")]
+    [TestCase("Backstage passes to a TAFKAL80ETC concert")]
+    public void Quality_DoesntIncreaseAbove50(string interestingProductName)
     {
       const int maxQuality = 50;
-      var item = new ItemBuilder().WithName("Aged Brie").WithQuality(maxQuality).Build();
+      var item = new ItemBuilder().WithName(interestingProductName).WithQuality(maxQuality).Build();
       GildedRose app = new GildedRose(new[] {item});
 
       app.UpdateQuality();
@@ -137,6 +139,39 @@ namespace GildedRose
 
       Assert.AreEqual(initialQuality, item.Quality);
     }
+
+    [Test]
+    [TestCase(15, 1)]
+    [TestCase(10, 2)]
+    [TestCase(5, 3)]
+    [TestCase(1, 3)]
+    public void Quality_ForBackstagePasses_AcceleratesAsSellByDateApproaches(int sellIn, int qualityIncrement)
+    {
+      const int initialQuality = 10;
+      var item =
+        new ItemBuilder().WithName("Backstage passes to a TAFKAL80ETC concert")
+          .WithSellIn(sellIn)
+          .WithQuality(initialQuality)
+          .Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality + qualityIncrement, item.Quality);
+    }
+
+    [Test]
+    public void Quality_ForBackstagePasses_DropsToZeroAfterSellByDate()
+    {
+      var item = new ItemBuilder().WithName("Backstage passes to a TAFKAL80ETC concert").WithSellIn(0).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(0, item.Quality);
+    }
+
+    
 
   }
 }
