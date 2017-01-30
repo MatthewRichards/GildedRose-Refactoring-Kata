@@ -99,6 +99,30 @@ namespace GildedRose
 
       Assert.GreaterOrEqual(0, item.Quality);
     }
+
+    [Test]
+    public void Quality_ForAgedBrie_IncreasesWithAge()
+    {
+      const int initialQuality = 19;
+      var item = new ItemBuilder().WithName("Aged Brie").WithQuality(initialQuality).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(initialQuality + 1, item.Quality);
+    }
+
+    [Test]
+    public void Quality_DoesntIncreaseAbove50()
+    {
+      const int maxQuality = 50;
+      var item = new ItemBuilder().WithName("Aged Brie").WithQuality(maxQuality).Build();
+      GildedRose app = new GildedRose(new[] {item});
+
+      app.UpdateQuality();
+
+      Assert.AreEqual(maxQuality, item.Quality);
+    }
   }
 }
 
