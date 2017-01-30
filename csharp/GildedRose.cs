@@ -19,19 +19,21 @@ namespace GildedRose
 
 	  private readonly Dictionary<string, Func<int, int, int>> qualityRules = new Dictionary<string, Func<int, int, int>>
 	  {
-	    {AgedBrie, (sellIn, quality) => quality + 1},
+	    {AgedBrie, (sellIn, quality) => quality + (sellIn <= 0 ? 2 : 1)},
 	    {
 	      BackstagePasses, (sellIn, quality) =>
 	      {
+	        if (sellIn <= 0) return 0;
 	        if (sellIn < 6) return quality + 3;
 	        if (sellIn < 11) return quality + 2;
 	        return quality + 1;
 	      }
 	    },
-      {SulfurasHandOfRagnaros, (sellIn, quality) => quality }
+	    {SulfurasHandOfRagnaros, (sellIn, quality) => quality},
+	    {ConjouredRabbit, (sellIn, quality) => quality - (sellIn <= 0 ? 4 : 2)}
 	  };
 
-	  private readonly Func<int, int, int> defaultQualityRule = (sellIn, quality) => quality - 1;
+	  private readonly Func<int, int, int> defaultQualityRule = (sellIn, quality) => quality - (sellIn <= 0 ? 2 : 1);
 
 
     public void UpdateQuality()
@@ -41,45 +43,6 @@ namespace GildedRose
 		    var qualityRule = qualityRules.ContainsKey(item.Name) ? qualityRules[item.Name] : defaultQualityRule;
 		    item.Quality = EnforceQualityRange(qualityRule(item.SellIn, item.Quality));
         
-        
-		    if (item.SellIn <= 0)
-		    {
-		      if (item.Name != AgedBrie)
-		      {
-		        if (item.Name != BackstagePasses)
-		        {
-		          if (item.Quality > 0)
-		          {
-		            if (item.Name != SulfurasHandOfRagnaros)
-		            {
-		              item.Quality = item.Quality - 1;
-		            }
-		          }
-		        }
-		        else
-		        {
-		          item.Quality = item.Quality - item.Quality;
-		        }
-		      }
-		      else
-		      {
-		        if (item.Quality < 50)
-		        {
-		          item.Quality = item.Quality + 1;
-		        }
-		      }
-		    }
-
-        if (item.Name == ConjouredRabbit)
-		    {
-		      if (item.SellIn <= 0)
-		      {
-		        item.Quality--;
-		      }
-
-		      item.Quality--;
-		    }
-
         if (item.Name != SulfurasHandOfRagnaros)
         {
           item.SellIn = item.SellIn - 1;
